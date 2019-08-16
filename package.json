@@ -1,6 +1,6 @@
 {
   "name": "tailwind-swatches",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create (macOS) color swatches from Tailwind CSS config",
   "keywords": [
     "tailwindcss",
@@ -22,6 +22,7 @@
   "license": "MIT",
   "homepage": "https://github.com/philippbosch/tailwind-swatches#readme",
   "dependencies": {
+    "chalk": "2.4.2",
     "color-parser": "0.1.0",
     "tempy": "0.3.0",
     "yargs": "13.3.0"

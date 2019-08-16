@@ -4,17 +4,27 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const path = require('path');
 
+const chalk = require('chalk');
 const parseColor = require('color-parser');
 const tempy = require('tempy');
 const yargs = require('yargs');
 
 const resolveConfig = require('tailwindcss/resolveConfig');
 
+// Try to get the project name from package.json
+let package, projectName;
+try {
+  package = require(path.resolve('package.json'));
+  projectName = package.name;
+} catch (e) {
+  projectName = 'Tailwind CSS';
+}
+
 // Command line arguments
 const { name, config } = yargs
   .option('n', {
     alias: 'name',
-    default: 'Tailwind CSS',
+    default: projectName,
     describe: 'Name of the generated color palette',
     type: 'string',
   })
@@ -76,14 +86,17 @@ exec(`/usr/bin/env swift ${tempFileName}`, function(err) {
   if (err) {
     if (err.code === 127) {
       console.log(
-        'Unable to find Swift interpreter. You may need to install Xcode command line tools.'
+        chalk.red(
+          'Unable to find Swift interpreter. You may need to install Xcode command line tools.'
+        )
       );
       process.exit(2);
     }
-    console.error(err);
+    console.error(chalk.red(err));
     process.exit(3);
   }
+  console.log(chalk.green(`Color palette '${name}' has been generated.`));
   console.log(
-    `Color palette '${name}' has been generated.\nPlease find it under the third tab in your macOS color picker.\nNOTE: You may need to restart your application for the palette to show up.\n`
+    'Please find it under the third tab in your macOS color picker.\nNOTE: You may need to restart your application for the palette to show up.'
   );
 });

@@ -9,7 +9,7 @@ The file will be created in `~/Libary/Colors` where the system-native color pick
 ## Installation
 
 ```bash
-$ npm install -g tailwind-swatches
+$ npm install -D tailwind-swatches
 ```
 
 ## Requirements
@@ -22,7 +22,7 @@ $ npm install -g tailwind-swatches
 ## Usage
 
 ```bash
-$ twswatches --help
+$ npx tailwind-swatches --help
 Options:
   --help        Show help                                              [boolean]
   --version     Show version number                                    [boolean]
@@ -34,7 +34,7 @@ Options:
 Example:
 
 ```bash
-$ twswatches -c /path/to/tailwind.config.js -n "My Project"
+$ npx tailwind-swatches -c /path/to/tailwind.config.js -n "My Project"
 ```
 
 [^1]: We create and execute a temporary Swift file that generates the actual color palette file.

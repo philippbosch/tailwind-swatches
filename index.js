@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const { exec } = require('child_process');
+const path = require('path');
 
 const parseColor = require('color-parser');
 const tempy = require('tempy');
@@ -26,7 +27,7 @@ const { name, config } = yargs
 // Read Tailwind config
 let customConfig;
 try {
-  customConfig = require(config);
+  customConfig = require(path.resolve(config));
 } catch (e) {
   console.error(`Unable to find config file: ${config}`);
   process.exit(1);

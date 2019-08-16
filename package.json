@@ -1,0 +1,16 @@
+{
+  "name": "tailwindcss-swatches",
+  "version": "0.1.0",
+  "description": "Create (macOS) color swatches from Tailwind CSS config",
+  "main": "index.js",
+  "bin": {
+    "twswatches": "./index.js"
+  },
+  "author": "Philipp Bosch <hello@pb.io>",
+  "license": "MIT",
+  "dependencies": {
+    "color-parser": "0.1.0",
+    "tempy": "0.3.0",
+    "yargs": "13.3.0"
+  }
+}

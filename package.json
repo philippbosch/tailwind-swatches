@@ -1,13 +1,26 @@
 {
-  "name": "tailwindcss-swatches",
+  "name": "tailwind-swatches",
   "version": "0.1.0",
   "description": "Create (macOS) color swatches from Tailwind CSS config",
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "colors",
+    "color palette",
+    "macos",
+    "clr"
+  ],
   "main": "index.js",
   "bin": {
     "twswatches": "./index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philippbosch/tailwind-swatches.git"
+  },
   "author": "Philipp Bosch <hello@pb.io>",
   "license": "MIT",
+  "homepage": "https://github.com/philippbosch/tailwind-swatches#readme",
   "dependencies": {
     "color-parser": "0.1.0",
     "tempy": "0.3.0",

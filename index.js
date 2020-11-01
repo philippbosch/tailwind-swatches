@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const parseColor = require('color-parser');
 const tempy = require('tempy');
 const yargs = require('yargs');
+const warning = chalk.keyword('orange');
 
 const resolveConfig = require('tailwindcss/resolveConfig');
 
@@ -22,17 +23,17 @@ try {
 
 // Command line arguments
 const { name, config } = yargs
-  .option('n', {
-    alias: 'name',
-    default: projectName,
-    describe: 'Name of the generated color palette',
-    type: 'string',
-  })
-  .option('c', {
-    alias: 'config',
-    default: './tailwind.config.js',
-    describe: 'Path to the Tailwind CSS config',
-  }).argv;
+    .option('n', {
+      alias: 'name',
+      default: projectName,
+      describe: 'Name of the generated color palette',
+      type: 'string',
+    })
+    .option('c', {
+      alias: 'config',
+      default: './tailwind.config.js',
+      describe: 'Path to the Tailwind CSS config',
+    }).argv;
 
 // Read Tailwind config
 let customConfig;
@@ -54,9 +55,16 @@ function upperCaseFirst(s) {
 }
 
 function createSwatch(name, color) {
-  const { r, g, b, a } = parseColor(color);
-  return `list.setColor(NSColor.init(red: ${r / 255}, green:${g /
+  if (color === 'currentColor') {
+    console.log(warning(`Skipping: ${name} : ${color} - not a color!`));
+  } else {
+    const {r, g, b, a} = parseColor(color);
+    console.log(
+        `Processing: ${name} :`+` ${chalk.hex(color)(color)}`+` ${chalk.bgHex(color)(color)}`
+    );
+    return `list.setColor(NSColor.init(red: ${r / 255}, green:${g /
     255}, blue:${b / 255}, alpha:${a}), forKey: "${upperCaseFirst(name)}")`;
+  }
 }
 
 for (const [key, value] of Object.entries(colors)) {
@@ -86,9 +94,9 @@ exec(`/usr/bin/env swift ${tempFileName}`, function(err) {
   if (err) {
     if (err.code === 127) {
       console.log(
-        chalk.red(
-          'Unable to find Swift interpreter. You may need to install Xcode command line tools.'
-        )
+          chalk.red(
+              'Unable to find Swift interpreter. You may need to install Xcode command line tools.'
+          )
       );
       process.exit(2);
     }
@@ -97,6 +105,6 @@ exec(`/usr/bin/env swift ${tempFileName}`, function(err) {
   }
   console.log(chalk.green(`Color palette '${name}' has been generated.`));
   console.log(
-    'Please find it under the third tab in your macOS color picker.\nNOTE: You may need to restart your application for the palette to show up.'
+      'Please find it under the third tab in your macOS color picker.\nNOTE: You may need to restart your application for the palette to show up.'
   );
 });

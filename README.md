@@ -11,6 +11,10 @@ The file will be created in `~/Libary/Colors` where the system-native color pick
 ```bash
 $ npm install -D tailwind-swatches
 ```
+Note: You may need to run as `tailwind-swatches` has a dependancy on `tailwindcss/resolveConfig`
+```bash
+$ npm add tailwindcss  
+```
 
 ## Requirements
 

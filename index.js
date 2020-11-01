@@ -55,12 +55,12 @@ function upperCaseFirst(s) {
 }
 
 function createSwatch(name, color) {
-  if (color === 'currentColor') {
-    console.log(warning(`Skipping: ${name} : ${color} - not a color!`));
+  if (/[0-9A-Fa-f]{6}/.test(color)) {
+    console.log(warning(`Skipping: ${name} : ${color} - not a valid color!`));
   } else {
     const {r, g, b, a} = parseColor(color);
     console.log(
-        `Processing: ${name} :`+` ${chalk.hex(color)(color)}`+` ${chalk.bgHex(color)(color)}`
+        `Processing: ${name} :` + ` ${chalk.hex(color)(color)}` + ` ${chalk.bgHex(color)(color)}`
     );
     return `list.setColor(NSColor.init(red: ${r / 255}, green:${g /
     255}, blue:${b / 255}, alpha:${a}), forKey: "${upperCaseFirst(name)}")`;

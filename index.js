@@ -55,7 +55,7 @@ function upperCaseFirst(s) {
 }
 
 function createSwatch(name, color) {
-  if (/[0-9A-Fa-f]{6}/.test(color) || /[0-9A-Fa-f]{3}/.test(color)) {
+  if (/^#(?:[0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(color)) {
     console.log(
       `Processing: ${name} :` + ` ${chalk.hex(color)(color)}` + ` ${chalk.bgHex(color)(color)}`
     );

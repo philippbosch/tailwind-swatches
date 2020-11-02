@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const parseColor = require('color-parser');
 const tempy = require('tempy');
 const yargs = require('yargs');
+const warning = chalk.keyword('orange');
 
 const resolveConfig = require('tailwindcss/resolveConfig');
 
@@ -54,9 +55,17 @@ function upperCaseFirst(s) {
 }
 
 function createSwatch(name, color) {
-  const { r, g, b, a } = parseColor(color);
-  return `list.setColor(NSColor.init(red: ${r / 255}, green:${g /
+  if (/^#(?:[0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/.test(color)) {
+    console.log(
+      `Processing: ${name} :` + ` ${chalk.hex(color)(color)}` + ` ${chalk.bgHex(color)(color)}`
+    );
+    const {r, g, b, a} = parseColor(color);
+    return `list.setColor(NSColor.init(red: ${r / 255}, green:${g /
     255}, blue:${b / 255}, alpha:${a}), forKey: "${upperCaseFirst(name)}")`;
+  } else
+  {
+    console.log(warning(`Skipping: ${name} : ${color} - not a valid color!`));
+  }
 }
 
 for (const [key, value] of Object.entries(colors)) {
@@ -65,7 +74,6 @@ for (const [key, value] of Object.entries(colors)) {
       swatches.push(createSwatch(`${key} ${subkey}`, subvalue));
     }
   } else {
-    if (key === 'transparent') continue;
     swatches.push(createSwatch(key, value));
   }
 }
